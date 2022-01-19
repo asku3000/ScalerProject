@@ -67,11 +67,11 @@ Example Explanation
 
 	public static int solve(int A, int B, int C) {
 		long mod = 1000000007;
-		long gcd = findGcd(B, C);
+		long gcd = gcd(B, C);
 		long product = B * C;
 		long lcm = product / gcd;
 		long l = Math.min(B, C);
-		long r = A * Math.min(B, C);
+		long r = (long) A * Math.min(B, C);
 		long mid = 0;
 		while (l <= r) {
 			mid = l + (r - l) / 2;
@@ -87,11 +87,12 @@ Example Explanation
 			}
 		}
 		return (int) (mid % mod);
-	}
+    }
 
-	static int findGcd(int A, int B) {
-		if (B == 0)
-			return A;
-		return findGcd(B, A % B);
-	}
+    static int gcd(int a, int b){
+        if(b==0){
+            return a;
+        }
+        return gcd(b, a%b);
+    }
 }
