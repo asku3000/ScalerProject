@@ -1,4 +1,4 @@
-package Hashing;
+package hashing;
 
 public class ReplicatingSubstring {
 
