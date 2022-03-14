@@ -140,15 +140,16 @@ public class MapSumPairs {
 				// no prefix
 				return 0;
 			}
-			word += String.valueOf(curr.data);
+			
 			curr = curr.children[idx];
+			word += String.valueOf(curr.data);
 		}
 
 		if (curr == null) {
 			return 0;
 		}
-		word += String.valueOf(curr.data);
-		word = word.replace("$", "");
+//		word += String.valueOf(curr.data);
+//		word = word.replace("$", "");
 		sum = 0;
 		findSumUsingRecc(curr, word);
 		return sum;
