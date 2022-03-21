@@ -1,4 +1,4 @@
-package recurrsion;
+package backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,29 +88,22 @@ You can see that these are all possible subsets.
 public class Subset {
 
 	public static void main(String[] args) {
-		subsets(Arrays.asList(new Integer[] { 12, 13 }));
+		for (ArrayList<Integer> list : subsets(Arrays.asList(new Integer[] {1, 2, 3}))) {
+			System.out.print("\n");
+			for (Integer i : list) {
+				System.out.print(i + ",");
+			}
+		}
 
 	}
 
 	static ArrayList<ArrayList<Integer>> ans;
 
-	static void solve(int idx, ArrayList<Integer> cur, List<Integer> A) {
-		if (idx == A.size()) {
-			ans.add(new ArrayList<>(cur));
-			return;
-		}
-		solve(idx + 1, cur, A); // not take
-		int element = A.get(idx);
-		cur.add(element); // DO
-		solve(idx + 1, cur, A); // take
-		cur.remove(cur.size() - 1); // UNDO
-	}
-
 	public static ArrayList<ArrayList<Integer>> subsets(List<Integer> A) {
+		ans = new ArrayList<ArrayList<Integer>>();
 		Collections.sort(A);
-		ans = new ArrayList<>();
-		ArrayList<Integer> cur = new ArrayList<>();
-		solve(0, cur, A);
+		ArrayList<Integer> curr = new ArrayList<Integer>();
+		findSubsets(0, curr, A);
 		// sort list of list
 		Collections.sort(ans, (ArrayList<Integer> first, ArrayList<Integer> second) -> {
 			for (int i = 0; i < first.size() && i < second.size(); i++) {
@@ -124,6 +117,19 @@ public class Subset {
 			return -1;
 		});
 		return ans;
+	}
+
+	private static void findSubsets(int i, ArrayList<Integer> curr, List<Integer> A) {
+		if (i == A.size()) {
+			ans.add(new ArrayList<Integer>(curr));
+			return;
+		}
+
+		findSubsets(i + 1, curr, A);// not taking / unselecting;
+		// selecting
+		curr.add(A.get(i));// do
+		findSubsets(i + 1, curr, A);// rec
+		curr.remove(curr.size() - 1);// undo
 	}
 
 }
