@@ -1,4 +1,4 @@
-package recurrsion;
+package backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,36 +77,33 @@ Explanation 2:
 public class LetterPhone {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		for(String s : letterCombinations("234")) {
+		for (String s : letterCombinations("234")) {
 			System.out.println(s);
 		}
+
 	}
-
-	static ArrayList<String> ans;
-	static String a;
-
+	
 	public static ArrayList<String> letterCombinations(String A) {
 		List<String> letters = Arrays
 				.asList(new String[] { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" });
-
-		int i = 0;
-		int j = i;
-		ans = new ArrayList();
-		ArrayList<String> temp = new ArrayList<String>();
-		a = A;
-		solve(i, new StringBuilder(""), letters, temp);
+		int i=0;
+		ArrayList<String> ans = new ArrayList<String>();
+		StringBuilder sb = new StringBuilder("");
+		find(i, letters, sb, ans, A);
 		return ans;
 	}
 
-	static void solve(int i, StringBuilder s, List<String> letters, ArrayList<String> temp) {
+	private static void find(int i, List<String> letters, StringBuilder sb, ArrayList<String> ans, String a) {
 		if(i==a.length()) {
-			ans.add(s.toString());
+			ans.add(sb.toString());
 			return;
 		}
+		
 		String letter = letters.get(a.charAt(i)-'0');
-		for(int j = 0; j<letter.length(); j++) {
-			solve(i+1, s.append(String.valueOf(letter.charAt(j))), letters, temp);			
+		for(int j =0; j<letter.length(); j++) {
+			sb.append(String.valueOf(letter.charAt(j)));
+			find(i+1, letters, sb, ans, a);
+			sb = sb.deleteCharAt(sb.length()-1);
 		}
 		
 	}

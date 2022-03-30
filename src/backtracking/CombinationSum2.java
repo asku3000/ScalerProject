@@ -1,4 +1,4 @@
-package recurrsion;
+package backtracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 /*
- * Problem Description
+ * Q1. Combination Sum II
+Solved
+character backgroundcharacter
+Stuck somewhere?
+Ask for help from a TA & get it resolved
+Get help from TA
+Problem Description
 
 Given an array of size N of candidate numbers A and a target number B. Return all unique combinations in A where the candidate numbers sums to B.
 
@@ -89,38 +95,36 @@ Explanation 2:
  3 = 3
  All the above combinations sum to 3 and are arranged in ascending order.
  */
+public class CombinationSum2 {
 
-public class CombinationsSum2 {
 	public static void main(String[] args) {
-		for (ArrayList<Integer> li : combinationSum(Arrays.asList(new Integer[] { 1, 7, 1 }), 8)) {
+		for (ArrayList<Integer> li : combinationSum(Arrays.asList(new Integer[] { 10, 1, 2, 7, 6, 1, 5 }), 8)) {
 			System.out.println(" ");
 			for (Integer i : li) {
 				System.out.print(i + " ");
 			}
 		}
+
 	}
 
 	public static ArrayList<ArrayList<Integer>> combinationSum(List<Integer> A, int B) {
-		int i = 0;
-		int sum = 0;
-		ArrayList<Integer> temp = new ArrayList();
-		ArrayList<ArrayList<Integer>> result = new ArrayList();
 		Collections.sort(A);
-		solve(i, B, A, sum, temp, result);
+		ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+		ArrayList<Integer> curr = new ArrayList<Integer>();
+		int sum = 0;
+		int i = 0;
+		find(i, sum, A, B, curr, result);
 		return result;
-
 	}
 
-	static void solve(int i, int b, List<Integer> a, int sum, ArrayList<Integer> temp,
-			List<ArrayList<Integer>> result) {
+	private static void find(int i, int sum, List<Integer> a, int b, ArrayList<Integer> curr,
+			ArrayList<ArrayList<Integer>> result) {
 		if (sum > b) {
 			return;
 		}
 
 		if (sum == b) {
-			ArrayList<Integer> li = new ArrayList();
-			li.addAll(temp);
-			result.add(li);
+			result.add(new ArrayList<Integer>(curr));
 			return;
 		}
 
@@ -128,29 +132,22 @@ public class CombinationsSum2 {
 			return;
 		}
 
-//		solve(i+1, b, a, sum, temp, result);
-//		HashSet<Integer> visited = new HashSet();
-//		for (int j = i; j < a.size(); j++) {
-//			if (i != j && a.get(i) == a.get(j)) {
-//				continue;
-//			}
-//
-//			temp.add(a.get(j));
-//			sum += a.get(j);
-//			if (i == 0 || (i > 0 && !visited.contains(i))) {
-//				solve(i + 1, b, a, sum, temp, result);
-//			}
-//			temp.remove(temp.size() - 1);
-//			sum -= a.get();
-//		}
+		int x = i;
+		while (x < a.size() && a.get(i).equals(a.get(x))) {
+			// rejecting jo same h for unselcting part
+			x++;
+		}
 
-		solve(i + 1, b, a, sum, temp, result);
+		// reject
+		find(x, sum, a, b, curr, result);
 
-		temp.add(a.get(i));
-		sum += a.get(i);
-		solve(i + 1, b, a, sum, temp, result);
-		temp.remove(temp.size() - 1);
+		// select
+		curr.add(a.get(i));// do
+		sum += a.get(i);// do
+		find(i + 1, sum, a, b, curr, result);
+		curr.remove(curr.size() - 1);
 		sum -= a.get(i);
 
 	}
+
 }
